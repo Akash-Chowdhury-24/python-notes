@@ -1,0 +1,153 @@
+Functions 
+Syntax
+def name():
+	// body
+
+def func1(*args) :      -> use this when the parameter number is not fixed , so args will be an tuple
+	// body
+
+def func1(**kwargs):   -> use this when the parameter no. is unknow and u want key value pair
+	// body
+func1(name=”akash”,address=”kolkata”)  -> if these variables are not received then take the default values 
+
+
+Buildin functions 
+1.	max(10,20,30,60,40) -> returns the max from the numbers given 
+2.	min(10,20,30,60,40) -> returns the min from the numbers given 
+3.	round(a) -> round figure output
+
+
+
+1️⃣ Normal Function
+Syntax
+def name():
+    # body
+
+Example
+def greet():
+    print("Hello, Python!")
+
+greet()
+
+2️⃣ Function with Parameters
+def greet(name):
+    print("Hello", name)
+
+greet("Akash")
+
+3️⃣ Function with Default Parameters
+
+👉 If the argument is not passed, default value is used.
+
+def greet(name="Guest", city="Unknown"):
+    print(name, "from", city)
+
+greet()
+greet("Akash", "Kolkata")
+
+4️⃣ *args (Variable Number of Arguments)
+
+👉 Use when number of parameters is not fixed
+👉 args is stored as a tuple
+
+def func1(*args):
+    print(args)
+
+func1(10, 20, 30)
+func1("Akash", "Kolkata", 25)
+
+Output
+(10, 20, 30)
+('Akash', 'Kolkata', 25)
+
+5️⃣ **kwargs (Keyword Variable Arguments)
+
+👉 Use when number of parameters is unknown
+👉 Data is received as key–value pairs (dictionary)
+
+def func2(**kwargs):
+    print(kwargs)
+
+func2(name="Akash", address="Kolkata")
+
+Output
+{'name': 'Akash', 'address': 'Kolkata'}
+
+6️⃣ **kwargs with Default Values
+
+👉 If key is not received, default value is used
+
+def func3(name="Guest", address="Not Provided"):
+    print("Name:", name)
+    print("Address:", address)
+
+func3(name="Akash")
+
+7️⃣ *args + **kwargs Together
+def func4(*args, **kwargs):
+    print("Args:", args)
+    print("Kwargs:", kwargs)
+
+func4(10, 20, name="Akash", city="Kolkata")
+
+
+------------------------------------------------------------------------
+
+
+1️⃣ Passing a function as an argument to another function
+
+In Python, functions are first-class objects, so they can be passed like variables.
+
+Example
+def add(a, b):
+    return a + b
+
+def operate(func, x, y):   # func receives a function
+    return func(x, y)
+
+result = operate(add, 10, 5)
+print(result)
+
+Output
+15
+
+Explanation
+
+add is passed without parentheses
+
+operate() calls the passed function using func(x, y)
+
+2️⃣ Returning a function from another function
+
+A function can create and return another function.
+
+Example
+def outer():
+    def inner():
+        return "Hello from inner function"
+    return inner     # returning the function, not calling it
+
+func = outer()
+print(func())
+
+Output
+Hello from inner function
+
+Explanation
+
+outer() returns the inner function
+
+func now holds inner
+
+func() executes inner()
+
+
+------------------------------------------------------------------
+
+in python we can also store a function in a variable 
+
+def add():
+	print(2+3)
+
+a = add
+a()

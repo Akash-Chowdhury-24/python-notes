@@ -1,0 +1,79 @@
+What are Decorators in Python?
+
+Decorators are a way to modify or extend the behavior of a function or method without changing its actual code.
+A decorator wraps another function and adds extra functionality to it.
+
+a decorator function uses the concept of python which allows us to pass functions as arguments and return functions , from another function
+
+decorators are written like any normal function but they are called like 
+
+@<decorator function name>
+def function_for_which_you_want_decorator():
+	print("ff")
+
+so where ever u see this format its actually a decorator being called
+
+----------------------------------------------------------------------------------------------------
+
+Basic Structure of a Decorator
+
+def akash_decorator(func):    # this is the decorator
+    def wrapper():
+        print("Before function call")
+        func()
+        print("After function call")
+    return wrapper
+
+@akash_decorator   # this is how we call a decorator
+def hello():
+    print("Hello World")
+
+hello()
+
+
+Output
+Before function call
+Hello World
+After function call
+
+
+note -> @akash_decorator is just shortcut syntax for:
+hello = akash_decorator(hello)
+
+----------------------------------------------------------------
+
+Why do we need decorators?
+Decorators are used when you want to add common functionality like:
+
+✔ Logging
+✔ Authentication
+✔ Authorization
+✔ Validation
+✔ Timing / performance check
+✔ Access control (Django uses this a lot)
+
+----------------------------------------------------------------
+
+Decorator with Arguments 
+def my_decorator(func):
+    def wrapper(*args, **kwargs):
+        print("Function started")
+        result = func(*args, **kwargs)
+        print("Function ended")
+        return result
+    return wrapper
+
+@my_decorator
+def add(a, b):
+    return a + b
+
+print(add(10, 20))
+
+----------------------------------------------------------------
+
+there are several default decorators in python like 
+@property -> used in getter setter 
+@staticmethod -> to show static method 
+@classmethod -> to show class method
+
+etc

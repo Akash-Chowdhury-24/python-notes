@@ -1,0 +1,261 @@
+1️⃣ datetime — Working with Dates & Time
+
+Used for:
+
+Dates
+
+Time
+
+Timestamps
+
+Time differences
+
+Formatting / parsing dates
+
+🔹 Core Classes in datetime
+import datetime
+
+Class	Purpose
+date	Only date (YYYY-MM-DD)
+time	Only time (HH:MM:SS)
+datetime	Date + Time
+timedelta	Difference between dates
+timezone	Time zone handling
+📌 date
+from datetime import date
+
+d = date(2026, 1, 26)
+print(d)
+print(d.year, d.month, d.day)
+
+Today’s date
+today = date.today()
+print(today)
+
+📌 time
+from datetime import time
+
+t = time(14, 30, 45)
+print(t)
+print(t.hour, t.minute, t.second)
+
+📌 datetime
+from datetime import datetime
+
+dt = datetime(2026, 1, 26, 14, 45, 30)
+print(dt)
+
+Current date & time
+now = datetime.now()
+print(now)
+
+📌 timedelta (Date arithmetic)
+from datetime import timedelta, datetime
+
+now = datetime.now()
+future = now + timedelta(days=10)
+past = now - timedelta(hours=5)
+
+print(future)
+print(past)
+
+📌 Difference between dates
+d1 = datetime(2026, 1, 1)
+d2 = datetime(2026, 1, 26)
+
+diff = d2 - d1
+print(diff.days)
+
+📌 Formatting Dates (strftime)
+now = datetime.now()
+
+formatted = now.strftime("%Y-%m-%d %H:%M:%S")
+print(formatted)
+
+
+Common format codes:
+
+%Y  Year
+%m  Month
+%d  Day
+%H  Hour
+%M  Minute
+%S  Second
+
+📌 Parsing Strings to datetime (strptime)
+date_str = "2026-01-26 14:30:00"
+dt = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+print(dt)
+
+2️⃣ os — Operating System Interaction
+
+Used for:
+
+File & directory operations
+
+Environment variables
+
+Running system commands
+
+Path handling
+
+🔹 Import
+import os
+
+📌 Current Working Directory
+print(os.getcwd())
+
+
+Change directory:
+
+os.chdir("C:/Users")
+
+📌 List Files & Folders
+print(os.listdir("."))
+
+📌 Create / Remove Directories
+os.mkdir("test_folder")
+os.makedirs("a/b/c")   # nested folders
+
+
+Remove:
+
+os.rmdir("test_folder")
+
+📌 File existence checks
+print(os.path.exists("file.txt"))
+print(os.path.isfile("file.txt"))
+print(os.path.isdir("folder"))
+
+📌 Path operations (os.path)
+path = "C:/Users/test/file.txt"
+
+print(os.path.basename(path))
+print(os.path.dirname(path))
+print(os.path.split(path))
+
+
+Join paths safely:
+
+full_path = os.path.join("folder", "subfolder", "file.txt")
+
+📌 Environment Variables
+print(os.environ)
+print(os.environ.get("PATH"))
+
+
+Set env variable:
+
+os.environ["APP_ENV"] = "production"
+
+📌 Run System Commands
+os.system("echo Hello World")
+
+
+⚠️ Simple but limited — subprocess is preferred for real apps.
+
+3️⃣ sys — Python Runtime & Interpreter Info
+
+Used for:
+
+Command-line arguments
+
+Exit program
+
+Python path
+
+System info
+
+🔹 Import
+import sys
+
+📌 Command Line Arguments
+
+Run:
+
+python app.py 10 20
+
+
+Code:
+
+print(sys.argv)
+
+
+Example:
+
+a = int(sys.argv[1])
+b = int(sys.argv[2])
+print(a + b)
+
+📌 Exit Program
+sys.exit()
+sys.exit("Something went wrong")
+
+📌 Python Path
+print(sys.path)
+
+
+Add path dynamically:
+
+sys.path.append("/my/custom/path")
+
+📌 Interpreter & Platform Info
+print(sys.version)
+print(sys.platform)
+
+📌 Standard Input / Output
+sys.stdout.write("Hello")
+sys.stderr.write("Error message")
+
+4️⃣ json — JSON Serialization & Deserialization
+
+Used for:
+
+APIs
+
+Config files
+
+Data exchange
+
+🔹 Import
+import json
+
+📌 Python → JSON (dumps)
+data = {
+    "name": "Akash",
+    "age": 25,
+    "skills": ["Python", "AWS"]
+}
+
+json_str = json.dumps(data)
+print(json_str)
+
+
+Pretty print:
+
+print(json.dumps(data, indent=4))
+
+📌 JSON → Python (loads)
+json_str = '{"name":"Akash","age":25}'
+data = json.loads(json_str)
+
+print(data["name"])
+
+📌 Read JSON from File
+with open("data.json", "r") as f:
+    data = json.load(f)
+
+print(data)
+
+📌 Write JSON to File
+with open("data.json", "w") as f:
+    json.dump(data, f, indent=4)
+
+📌 Custom Objects → JSON
+class User:
+    def __init__(self, name):
+        self.name = name
+
+u = User("Akash")
+
+json.dumps(u.__dict__)

@@ -1,0 +1,103 @@
+1) Single Underscore _
+------------------------
+A. _ as a variable (throwaway variable)
+
+Used when a value is not needed.
+
+for _ in range(3):
+    print("Hello")
+
+a, _, b = (1, 2, 3)
+print(a, b)
+
+Meaning: “I don’t care about this value”
+
+--------------------------------------------------------
+
+B. _name (single leading underscore)
+
+✔ Works for variables, methods, functions, classes
+
+class Demo:
+    def _internal_method(self):
+        print("Internal use only")
+
+Meaning:
+Internal / protected-like (by convention)
+Should not be used outside the class/module
+Python does not restrict access
+
+
+------------------------------------------
+C. Trailing underscore name_
+
+Used to avoid keyword conflict
+
+class_ = "Python"
+
+---------------------------------------------
+
+D. _ in Imports
+from module import *
+
+Names starting with _ are NOT imported
+
+def _hidden():
+    pass
+
+✔ Helps hide internal helpers
+
+----------------------------------------------
+
+E. _ in Function Arguments
+def process(_):
+    print("Ignored argument")
+
+Used when parameter is required but unused
+
+==========================================================================
+
+2) Double Underscore __name (Name Mangling)
+
+✔ Applies to class attributes & methods only
+
+class Demo:
+    def __secret(self):
+        print("Hidden method")
+
+Behind the scenes:
+_Demo__secret
+
+Access:
+d = Demo()
+d._Demo__secret()   # Works
+
+
+Purpose:
+Avoid accidental override in subclasses
+Not meant for security
+
+===========================================================================
+
+3) Double Underscore on Both Sides __name__ (Magic / Dunder)
+
+These are special methods & variables defined by Python.
+
+Common examples
+Name	Purpose
+__init__	Constructor
+__str__	String representation
+__len__	Length
+__add__	+ operator
+__name__	Module name
+__main__	Entry point
+
+Example:
+class Book:
+    def __str__(self):
+        return "Python Book"
+b = Book()
+print(b)   # calls __str__()
+
+
+Do NOT create your own __something__ names unless overriding built-ins.

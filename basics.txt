@@ -1,0 +1,34 @@
+Printing 
+1.	print(“hello”)
+
+2.	A=10
+	b=20
+	print(“the sum of “,a,”and”,b,”is”,a+b)
+
+3.	A=10
+	b=20
+	print(“the sum of %i and %i is %i “ %(a,b,a+b))     -> i -> int , f->float , s-> str
+		a.	%f gives output in 6 decimal place 
+		b.	%.2f gives output in 2 decimal place
+4.	A=10
+	b=20
+	print(f“the sum of {a} and {b} is {a+b}”)   -> the “f” is for formatting the string , also known as f string 
+
+5.	Print by default has sep=” ” and end=”/n” so we get the output separated by spaces and then goes to the next line 
+	a=10
+	b=20
+	print(a,b,sep=” ”,end=”/n”)    -> u can modify these to your liking 
+
+
+Input
+A=input()      -> nothing is printed only ask for the input for a
+A=input(“enter the value of a”)   
+By default it takes input in string we need to type cast the input if we want to change 
+
+
+
+Comment
+2.	Single line -> #
+3.	Alt + 3
+4.	“””      “””   or   ‘’’        ‘’’    -> multi line comment. In reality this is a multiline string so try to avoid it 
+

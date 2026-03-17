@@ -1,0 +1,126 @@
+A higher-order function is a function that does at least one of the following:
+
+Accepts one or more functions as arguments
+Returns a function as its result
+
+Python supports higher-order functions because functions are first-class objects.
+
+-------------------------------------------------------------------------------------------
+
+1. Functions as First-Class Objects (Foundation Concept)
+
+In Python, functions:
+Can be assigned to variables
+Can be passed as arguments
+Can be returned from other functions
+
+def greet():
+    return "Hello"
+
+x = greet        # function assigned to variable
+print(x())       # Hello
+
+
+This property enables higher-order functions.
+
+------------------------------------------------------------------------------------------
+
+2. Passing a Function as an Argument
+
+Example 1: Basic Higher-Order Function
+def operation(func, a, b):
+    return func(a, b)
+
+def add(x, y):
+    return x + y
+
+def multiply(x, y):
+    return x * y
+
+print(operation(add, 2, 3))        # 5
+print(operation(multiply, 2, 3))   # 6
+
+
+-> operation() is a higher-order function
+-> add and multiply are passed as arguments
+
+-----------------------------------------------------------------------------------------
+
+3. Returning a Function from Another Function
+def outer():
+    def inner():
+        return "I am inner function"
+    return inner
+
+f = outer()
+print(f())    # I am inner function
+
+
+---> Function returning another function
+---> This is higher-order + closure
+
+----------------------------------------------------------------------------------------
+
+4. Closures (Important Concept)
+
+A closure is a function that:
+
+Remembers variables from its enclosing scope
+
+Even after the outer function has finished execution
+
+def power(n):
+    def inner(x):
+        return x ** n
+    return inner
+
+square = power(2)
+cube = power(3)
+
+print(square(4))  # 16
+print(cube(4))    # 64
+
+-----------------------------------------------------------------------------------------
+
+5. Built-in Higher-Order Functions
+
+5.1 map() – Transformation
+
+Applies a function to each element.
+
+nums = [1, 2, 3, 4]
+
+def square(x):
+    return x * x
+
+result = map(square, nums)
+print(list(result))   # [1, 4, 9, 16]
+
+
+5.2 filter() – Selection
+
+Filters elements based on a condition.
+
+nums = [1, 2, 3, 4, 5, 6]
+
+result = filter(lambda x: x % 2 == 0, nums)
+print(list(result))   # [2, 4, 6]
+
+5.3 reduce() – Aggregation
+
+Reduces an iterable to a single value.
+
+from functools import reduce
+
+nums = [1, 2, 3, 4]
+
+result = reduce(lambda a, b: a + b, nums)
+print(result)   # 10
+
+5.4 sorted() with key
+
+names = ["akash", "rohan", "su"]
+
+print(sorted(names, key=len))
+
+len is passed as a function

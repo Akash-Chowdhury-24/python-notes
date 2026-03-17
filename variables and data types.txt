@@ -1,0 +1,124 @@
+Variables & Data Types in python 
+
+variables are like a containers which can store data 
+
+Variables syntax
+a =10
+b= “akash”
+type(a)   -> gives the type of the variable  
+for integer the class is “int” 
+for string the class is “str”
+for float the class is “float”
+rules in variable name 
+1.Small letter , capital letter , special character (only _ ) -> at the start 
+2.No number in the start 
+3.No keyword
+
+To see all the keywords 
+•Import keyword
+•Keyword.kwlist
+
+
+Assigning values 
+a,b =10,20    -> this will assign 10 to a and 20 to b 
+a= 10,20,30,40 -> this will make a tuple 
+
+------------------------------------------------------
+
+arithmetic operators 
+1.+ -> add
+2.- -> sub
+3./ -> divide 
+4.* -> multiple
+5.** -> power 
+6.// -> quotient 
+7.% -> remainder 
+
+Assignment operator 
+1.= 
+
+Relational operator
+2.<
+3.>
+4.<=
+5.>=
+6.==
+7.!=
+
+Membership operator(works with all data type , string , list etc)
+1.in ->    “akash” in str1 -> true or false 
+2.not in 
+
+-------------------------------
+
+Strings in python
+ 
+a = “hello” 
+b = ‘akash’ 
+both allowed 
+
+arithmetic operator;-
+1.“akash”+”bumba”     -> akashbumba
+2.“akash”*3    ->akashakashakash
+
+A= “akash”
+1.[start,stop,step]    -> step has a default value of 1
+2.A[2] -> a
+3.A    k   a   s  h
+0    1   2   3  4
+-5 -4 -3 -2 -1
+4.A[1:4] -> kas   -> ignores the last index , even if we do A[-4:4]
+5.A[:4]  -> from the very start to before 4
+6.A[2:]  -> from 2 to very last
+7.A[4:1]   -> output ->“ ” -> obviously  becoz the start is greater than the stop 
+so to get the reverse we can use the step as negative 
+A[4:1:-1] -> has -> output
+so if step is positive I go from left to right and if negative I go reverse
+
+Built in functions :-
+1.	str1.capitalize() -> capitalize the string only the first character 
+2.	str1.lower() -> lower case 
+3.	str1.upper()-> upper case 
+4.	str1.swapcase() -> swaps the  cases 
+5.	str1.title() -> capitalize the first letter of each word
+6.	str1.count(“abb”) -> how many times the substring is present in the str1 string
+7.	str1.islower() -> says if all the character is lower case
+8.	str1.isupper() -> says if all the character is upper case
+9.	str1.isdigit() -> digits 
+10.	str1.isalpha() -> for alphabets 
+11.	str1.isalnum() -> for alphanumeric 
+12.	str1.find(“python”) -> returns the start index of the word “python” in the str1. If the word is not there then it will return -1
+	a.	str1.find(“python”,7) -> find python after index 7
+	b.	str1.find(“python”,7,20) -> find python btw index 7 and 20  
+13.	str1.index(“python”) -> returns the start index of the word “python” in the str1. If the word is not there then it will throw an error 
+14.	str1.replace(“hello”,”hi”) -> in the str1 replace hello with hi   
+15.	str1.split() -> by default with space but we can provide ethe parameters in the brackets 
+16.	len(str) -> length of the string 
+17.	str1.startsWith(“abc”)
+18.	str2.endsWith(“abc”)
+19.	str1.strip(“#”) -> remove “#” from both side of the string
+20.	str1.rstrip(“#”) -> r is right
+21.	str1.lstrip(“#”) -> l is left
+
+note -> string is immutable so a= “akash” then a.capitalize() then print(a). the ouput will be akash not Akash 
+note-> len() is common for all string , list , etc
+
+--------------------------------------------------------------------------------------------------------------
+
+Datatypes 
+
+1.	int 
+2.	float
+3.	string
+4.	list
+5.	dict
+6.	set
+7.	tuple
+
+Type casting 
+int()
+float()
+str()
+example :-
+1.	A=int(input(“enter the value of a”))
+

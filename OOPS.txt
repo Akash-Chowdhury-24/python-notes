@@ -1,0 +1,695 @@
+Object oriented programming in python 
+
+
+the basic concept of oops is same as usually. class and objects and the pillars and all are same as before 
+
+OOPS (Object-Oriented Programming System) is a programming approach where we organize code using objects and classes instead of only functions.
+
+Class → Blueprint (defines properties and behavior)
+Object → Real instance of a class
+
+Four core principles:
+Encapsulation – Binding data and methods together (data hiding)
+Abstraction – Showing only what is necessary, hiding complexity
+Inheritance – One class acquiring properties of another
+Polymorphism – Same method name, different behavior
+
+OOPS makes code modular, reusable, scalable, and easy to maintain
+
+----------------------------------------------------------------
+
+syntax :-
+
+class Akash: 
+	name = "akash"
+	age = 23
+	def print5():
+		print(5)
+	def add(a,b):
+		print(a+b)
+
+a = Akash()
+print(a.name)
+print(a.age)
+print(a.print5())
+print(a.add(2,3))
+
+----------------------------------------------------------------
+
+self keyword argument
+
+the self parameter is used to refer to the current instance of the class.
+
+example 
+
+class Akash:
+  name ='Akash'
+  def show(self):
+    print(self.name)
+      
+  def display():  # this will give error that name is not defined so to use those varibles of the class u need self
+    print(name)
+  
+a = Akash()
+a.show()
+
+note -> python sends the object created as the value for the self and this is done automatically we dont need to send it
+
+------------------------------------------------------------------
+
+__init__
+
+this is used as a constructor in python . the constructor logic remains same 
+
+class Akash:
+  def __init__(self):
+    self.name = 'Akash'
+  def show(self):
+    print(self.name)
+
+a = Akash()
+a.show()
+
+
+class Akash:
+  def __init__(self, name):
+    self.name = name
+  def show(self):
+    print(self.name)
+
+a = Akash('Akash Chowdhury')
+a.show()
+
+
+
+class Akash:
+  def __init__(self):
+    self.name = 'Akash'
+  def show(self):
+    print(self.name)
+
+a = Akash()
+a.name = 'Akash Sharma'
+a.show()
+this will print akash sharma
+
+
+note -> constructor overloading is not supported in python
+
+-------------------------------------------------------
+
+instance variable vs class variable 
+
+Class Variable -> Defined inside the class. Shared by all objects. Stored once for the class
+Instance Variable -> Defined using self. Unique for each object. Stored separately per object
+
+class Student:
+    college = "ABC University"   # CLASS VARIABLE
+
+    def __init__(self, name):
+        self.name = name         # INSTANCE VARIABLE
+
+    def show(self):
+        print("Name:", self.name)
+        print("College:", self.college)
+
+
+s1 = Student("Akash")
+s2 = Student("Rahul")
+
+s1.show()
+s2.show()
+
+--------------------------------------------------------------
+
+instance method vs class method vs static method 
+
+instance method -> Works with object (instance) data. Can access and modify instance variables. Takes self as the first parameter
+class method -> Can access and modify class variables. Takes cls as the first parameter. Uses @classmethod decorator
+static method -> Does not use instance or class data. Behaves like a normal function inside a class. Uses @staticmethod decorator
+
+example 
+class Student:
+    school = "ABC School"     # class variable
+
+    def __init__(self, name, marks):
+        self.name = name      # instance variable
+        self.marks = marks
+
+    # Instance Method
+    def display(self):
+        print("Name:", self.name)
+        print("Marks:", self.marks)
+
+    # Class Method
+    @classmethod
+    def change_school(cls, new_school):
+        cls.school = new_school
+
+    # Static Method
+    @staticmethod
+    def is_pass(marks):
+        return marks >= 40
+
+
+# Creating object
+s1 = Student("Akash", 85)
+
+# Calling instance method
+s1.display()
+
+# Calling class method
+Student.change_school("XYZ School")
+print("School:", Student.school)
+
+# Calling static method
+result = Student.is_pass(s1.marks)
+print("Pass:", result)
+
+
+---------------------------------------------------------------------------------------------------
+
+getters and setters 
+
+Getters and setters are used to read (get) and update (set) the value of an attribute in a controlled way.
+Instead of accessing a variable directly, you go through a method that can validate, protect, or modify the value.
+
+Why do we need them?
+To protect data
+To add validation
+To keep internal variables safe from wrong values
+
+the decorator used in this are :-
+for getter -> @property
+for setter -> @<property name>.setter
+
+example 
+
+class Akash : 
+	def __init__(self,num):
+		self._num = num
+
+	def show(self):
+		print(self._num)
+	
+	# getter
+	@property
+	def ten_times_num(self):
+		return self._num * 10
+
+	
+	# setter
+	@ten_time_less_num.setter
+	def ten_time_less_num(self,num):
+		self._num = num/10
+
+obj = Akash(10)
+obj.ten_time_less_num = 67
+print(obj.ten_times_num)
+obj.show()
+
+output 
+67
+6.7
+
+getters setters are used to read write data without touching the variable.
+setters very one understands that we are modifying the variable without knowing the variable but isn't getters and any normal function the same??? No here's where the catch is 
+
+class Demo: 
+	def __init__(self,num):
+		self._num = num
+
+	def calculateTen(self):
+		return self._num * 10
+	
+	# getter
+	@property
+	def ten_times_num(self):
+		return self._num * 10
+	
+
+the difference stands here 
+1) if some one has written 
+	d = Demo(10)
+	print(d.num)
+   but then they remembered that we need to do multiple more things before printing but we cannot change the "print(d.num)" line. then in this scenario we can just create a getter in the class with the name "num" then "print(d.num)" will automatically call the getter with our modified functionality without the need to change the implementation.
+
+2)when we call a function we are very much making it evident that we are doing some kind of processing but since getters are called like they are some variable so this processing can be hidden.
+
+
+Getters are needed not because they compute values, but because they allow methods to behave like attributes, enabling clean syntax, encapsulation, and future-proof design.
+
+----------------------------------------------------------------------------------------------- 
+
+Encapsulation in python
+
+Binding data (variables) and methods together
+Restricting direct access to internal data
+
+python implements this basically in the following ways 
+1) using public , _private and __protected variables and methods -> these naming conventions are explained in details in the underscore concepts in python
+2) using getter and setters -> using these we can give authentication or validation logics 
+
+------------------------------------------------------------------------------------------------
+
+inheritance in python
+
+Inheritance allows a class (child) to reuse, extend, or override the behavior of another class (parent).
+
+Why we need it:-
+Code reusability
+Logical hierarchy
+Easy maintenance
+Polymorphism (important for Django & OOP design)
+
+terminologies:-
+Parent / Base class -> Class being inherited from
+Child / Derived class -> Class that inherits
+super() -> Access parent methods
+Method overriding -> Child redefines parent method
+
+
+syntax :-
+class Animal:
+    def eat(self):
+        print("Animal is eating")
+
+class Dog(Animal):
+    def bark(self):
+        print("Dog is barking")
+
+d = Dog()
+d.eat()     # inherited
+d.bark()    # own method
+
+
+
+1) if the parent and child both has a constructor , we cannot just simply expect to access the variable which is to be set by the parent constructor and get the right value withput doing nothing in the child constructor . in the child we should always call the parent constructor so that the variables are properly initialized. to do this we use the super keyword
+
+super() -> is used to access parent class attributes safely.
+
+class Parent:
+	def __init__(self, name):
+		self.name = name
+	def show(self):
+		print(name)
+
+class Child(Parent):
+	def __init__(self,name,roll):
+		super().__init__(name)
+		self.roll = roll
+
+c = Child("akash",69)
+
+
+2) Method overriding 
+class Animal:
+    def sound(self):
+        print("Animal makes sound")
+
+class Dog(Animal):
+    def sound(self):
+        print("Dog barks")
+d = Dog()
+d.sound()   # Dog barks -> Child version overrides parent
+
+note -> in such cases to get the parent original attributes just use super in the child class accordingly 
+
+
+
+
+3) Types of Inheritance in Python:-
+3.1 Single Inheritance
+class A:
+    pass
+
+class B(A):
+    pass
+
+3.2 Multilevel Inheritance -> Chain inheritance
+class GrandParent:
+    def home(self):
+        print("Grandparent's home")
+
+class Parent(GrandParent):
+    pass
+
+class Child(Parent):
+    pass
+
+c = Child()
+c.home()
+
+
+3.3 Hierarchical Inheritance -> One parent, many children
+class Animal:
+    def eat(self):
+        print("Eating")
+
+class Dog(Animal):
+    pass
+
+class Cat(Animal):
+    pass
+
+
+3.4 Multiple Inheritance
+class Father:
+    def skill(self):
+        print("Driving")
+
+class Mother:
+    def skill(self):
+        print("Cooking")
+
+class Child(Father, Mother):
+    pass
+
+c = Child()
+c.skill()
+
+Output:
+Driving
+
+Why is this happening ? → MRO (Method Resolution Order)
+
+
+
+
+4) Method Resolution Order (MRO)
+
+Python follows C3 Linearization. -> Python checks left to right
+that is the parents which are in the left most will be executed
+
+class Father:
+    def skill(self):
+        print("Driving")
+
+class Mother:
+    def skill(self):
+        print("Cooking")
+
+class Child(Father, Mother):
+    pass
+
+c = Child()
+c.skill()
+
+since Father class is in the leftmost therfore it is executed but the child class will have access to all the methods of all of its parent class 
+
+example :-
+class Father:
+    def skills(self):
+        return ["gardening", "carpentry", "fishing"]
+    def hobbies(self):
+        return ["reading", "traveling"]
+      
+class Mother:
+    def skills(self):
+        return ["cooking", "painting", "gardening"]
+      
+class Child(Mother, Father):
+    pass
+
+c = Child()
+print("Child's Skills:", c.skills())  # Will use Mother's skills method due to MRO
+print("Child's Hobbies:", c.hobbies()) # Inherited from Father since Mother doesn't have hobbies method
+
+note -> we can see the order for the child class like this 
+print(Child.mro())
+Output:
+[Child, Mother, Father object]
+
+
+
+
+important -> the usage of super in multiple inheritance 
+class A:
+    def show(self):
+        print("A")
+
+class B(A):
+    def show(self):
+        super().show()
+        print("B")
+
+class C(A):
+    def show(self):
+        super().show()
+        print("C")
+
+class D(B, C):
+    def show(self):
+        super().show()
+        print("D")
+
+d = D()
+d.show()
+
+output 
+A
+C
+B
+D
+
+this is happening becoz of MRO ans what is the real behaviour of super() in python 
+if we do the d.mro() we will see the order of the classes are 
+[D B C A]
+
+what super() actually does is that it moves the next class in the order 
+so 1st it will go to class show() where we have a super() so now it will be to the next class that's B
+in B it will go to the show() where we have a super() so now it will be to the next class that's C
+in C it will go to the show() where we have a super() so now it will be to the next class that's A
+in A it will go to the show() where we have no super() so it will just print A then go back to the previous call C
+in C it will print C since it's just after the super() and will go back to B
+in B it will print B since it's just after the super() and will go back to D
+in C it will print D since it just after the super() and will stop there
+
+
+
+
+note -> every class inherits from the "object" class implicitly 
+class A:
+	pass
+print(A.__mro__) 
+or 
+a = A()
+print(a.mro())
+
+output 
+[A, object]
+
+
+note -> _protected attributes can be access in inheritance but is not encouraged , __private attributes cannot be accessed 
+note -> two important methods frequently used 
+isinstance(obj, Class) -> tells if the object is the instance of this class
+issubclass(Child, Parent) -> tells if the class is the subclass or derived class of the parent class 
+	
+
+-----------------------------------------------------------------------------------------------
+
+abstraction in python 
+
+Showing only what is necessary to the user and hiding the internal implementation details
+
+   
+Python achieves abstraction using:
+1)Abstract Base Classes (ABC) -> uses inheritance 
+2)Interfaces-like behavior (duck typing) -> without using inheritance
+
+
+1) Abstract Base Classes (ABC)
+
+from abc import ABC, abstractmethod
+
+# abstraction class
+class Shape(ABC):
+
+    @abstractmethod
+    def area(self):
+        pass
+
+# implementation of the abstraction class
+class Square(Shape):
+    def area(self):
+        return 10 * 10
+
+s = Shape()   # TypeError will not work
+
+sq = Square()
+print(sq.area())
+
+
+2) Abstract Class with Constructor
+from abc import ABC, abstractmethod
+class Vehical(ABC):
+  def __init__(self,type):
+    self.type = type
+
+  @abstractmethod
+  def start(self):
+    pass
+
+class Car(Vehical):
+  def start(self):
+    print(f"{self.type} car is starting with a key.")
+    
+c = Car("Sedan")
+c.start()
+
+note -> there can be multiple abstract method in an abstract class
+note -> the class which is implementing the abstract class must implement all of the abstract method 
+
+3) Abstraction using duck typing 
+class Dog:
+    def speak(self):
+        print("Dog says: Bark")
+
+class Cat:
+    def speak(self):
+        print("Cat says: Meow")
+
+class Human:
+    def speak(self):
+        print("Human says: Hello")
+
+def make_sound(obj):
+    obj.speak()   # expects obj to have speak()
+
+
+d = Dog()
+c = Cat()
+h = Human()
+
+make_sound(d)
+make_sound(c)
+make_sound(h)
+
+
+output :-
+Dog says: Bark
+Cat says: Meow
+Human says: Hello
+
+note -> here all the class needs to have the same signature , that is if one class doesn't have the speak method and we are calling for it anyways then it will give error 
+
+note -> there is a special function which helps in if a class has a certain variable and method or not -> hasattr(<name of the object of the class>,<attribute name>) -> it returns true or false
+def safe_sound(obj):
+    if hasattr(obj, "speak"):
+        obj.speak()
+    else:
+        print("Object cannot speak")
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+polymorphism in python 
+
+Same method name, same interface — different behavior
+
+1) Runtime Polymorphism (Method Overriding)
+
+class Animal:
+    def sound(self):
+        print("Animal makes sound")
+
+class Dog(Animal):
+    def sound(self):
+        print("Dog barks")
+
+class Cat(Animal):
+    def sound(self):
+        print("Cat meows")
+
+animals = [Dog(), Cat(), Animal()]
+
+for a in animals:
+    a.sound()
+
+
+output:-
+Dog barks
+Cat meows
+Animal makes sound
+
+we have already seen this in inheritance 
+
+
+2) Polymorphism Without Inheritance (Duck Typing)
+class Dog:
+    def speak(self):
+        print("Bark")
+
+class Human:
+    def speak(self):
+        print("Hello")
+
+class Robot:
+    def speak(self):
+        print("Beep")
+
+def make_sound(obj):
+    obj.speak()
+
+make_sound(Dog())
+make_sound(Human())
+make_sound(Robot())
+
+we have already explored this in abstraction 
+
+
+3) Function Polymorphism
+same method name different work 
+
+example 1
+len("Akash")
+len([1, 2, 3])
+len({1, 2, 3})
+
+example 2
+def add(a, b):
+    return a + b
+
+add(2, 3)          # 5
+add("Ak", "ash")   # Akash
+add([1], [2])      # [1, 2]
+
+
+4) Operator Overloading (Compile-like Polymorphism)
+
+a = 10 + 20 -> 30 
+b = "Ak" + "ash" -> "Akash"
+
+same + operator but different behaviours 
+
+
+5) Method Overloading -> the we did this in java is not supported in python becoz of its overlapping with duck typing 
+
+class Test:
+    def show(self, a):
+        print(a)
+
+    def show(self, a, b):
+        print(a, b)
+
+the show below will override the show above and hence show(10) will throw a type error 
+
+so to use this and solve this we can do it in the following ways 
+a)Default Arguments
+class Test:
+    def show(self, a=None, b=None):
+        if b is None:
+            print(a)
+        else:
+            print(a, b)
+
+b) Using *args
+class Test:
+    def show(self, *args):
+        print(args)
+
+
+---------------------------------------------------------------------------------------
+
+

@@ -1,0 +1,95 @@
+Dictionary { }
+
+Class name: dict
+
+Stores data in key : value pairs
+
+Mutable data structure
+
+Ordered (insertion order preserved from Python 3.7+)
+
+1. Creation
+A = dict()
+A = {}
+
+2. Accessing Values
+A[key]                     # returns value, KeyError if key not found
+A.get(key)                 # returns value or None if key not found
+A.get(key, "not found")    # returns "not found" if key not found
+
+3. Keys and Values Rules
+
+❌ Duplicate keys are not allowed
+
+✔️ Values can be duplicated
+
+Repeated keys overwrite the previous value
+
+4. Key Data Types
+
+Keys must be immutable (hashable)
+
+int
+
+str
+
+tuple (with immutable elements)
+
+❌ Not allowed as keys:
+
+list
+
+set
+
+dict
+
+5. Dictionary Operations
+dict1[key] = value          # add new key or update existing key
+dict1.update(dict2)         # merge dict2 into dict1
+dict1.keys()                # returns all keys (dict_keys object)
+dict1.values()              # returns all values (dict_values object)
+dict1.items()               # returns key-value pairs
+dict1.pop(key)              # remove key and return its value
+del dict1[key]               # delete key-value pair
+dict1.clear()               # remove all items
+
+
+⚠️ keys() and values() return view objects, not lists
+(use list(dict1.keys()) if a list is required)
+
+6. Membership Testing
+key in dict1
+key not in dict1
+
+
+✔️ Membership checks apply to keys only
+
+7. Iteration
+for key in dict1:
+    print(key, dict1[key])
+
+for key, value in dict1.items():
+    print(key, value)
+
+8. Nested Dictionary
+employee = {
+    "name": "Akash",
+    "skills": {"python": "advanced", "django": "beginner"}
+}
+
+9. Dictionary Comprehension
+cubes = {x: x**3 for x in range(1, 6)}
+
+10. Copying Dictionaries
+dict2 = dict1.copy()        # shallow copy
+
+Zip function 
+Suppose there are two list list1 and list2 , so zip will combine them and we can type cast to get different data type 
+
+list1=["name","age","ke"]
+list2 =["akash","23","chele"]
+dict(zip(list1,list2))    -> {'name' : 'akash' , 'age' : '23' , 'ke' : 'Chele'}
+
+list(zip(list1,list2))    -> [('name','akash'),('age','23'),('ke','chele')]
+
+tuple(zip(list1,list2))    -> (('name','akash'),('age','23'),('ke','chele'))

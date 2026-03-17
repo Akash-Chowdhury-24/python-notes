@@ -1,0 +1,132 @@
+Exception Handling
+
+Exception handling is used to handle runtime errors so that the program does not crash and we can display custom error messages.
+
+Basic Example
+try:
+    n1 = int(input("Enter the num1: "))   # may raise ValueError
+    n2 = int(input("Enter the num2: "))   # may raise ValueError
+    result = n1 / n2                      # may raise ZeroDivisionError
+    print(result)
+
+except ValueError:
+    print("Invalid input. Please enter integers only.")
+
+except ZeroDivisionError:
+    print("Division by zero is not possible.")
+
+except Exception as e:
+    print(e)
+
+Explanation
+
+Code that may cause an error is written inside the try block
+If an error occurs, Python jumps to the matching except block
+The remaining code in try is skipped
+
+Common Built-in Exceptions
+
+ValueError → wrong data type conversion
+
+ZeroDivisionError → division by zero
+
+TypeError → invalid operation between types
+
+IndexError → invalid index access
+
+KeyError → key not found in dictionary
+
+
+
+Order of except Blocks (VERY IMPORTANT)
+except ValueError:
+except ZeroDivisionError:
+except Exception:
+
+
+✔️ Specific exceptions first
+✔️ General exception (Exception) always last
+
+❌ A blank except: should be avoided unless absolutely required
+
+Difference Between except: and except Exception as e
+Type	Behavior
+except:	Catches all exceptions (including system exits)
+except Exception as e:	Catches all standard runtime exceptions and provides error message
+
+✔️ Best practice: use except Exception as e
+
+Finally Block
+finally:
+    print("This block always executes")
+
+
+✔️ Executes whether exception occurs or not
+✔️ Used for cleanup operations (closing files, DB connections)
+
+User-Defined Exceptions
+
+Python allows us to create our own custom exceptions.
+
+Steps to Create User-Defined Exceptions
+1. Create an Exception Class
+class SmallError(Exception):
+    pass
+
+class LargeError(Exception):
+    pass
+
+
+✔️ Must inherit from Exception
+
+2. Raise the Exception
+raise SmallError
+raise LargeError
+
+3. Handle the Exception
+except SmallError:
+    print("Guessed too small")
+
+except LargeError:
+    print("Guessed too large")
+
+
+Complete Example (Guess the Number Game)
+class SmallError(Exception):
+    pass
+
+class LargeError(Exception):
+    pass
+
+import random as r
+
+number = r.randint(1, 100)
+
+while True:
+    try:
+        ch = int(input("Guess the number: "))
+
+        if ch > number:
+            raise LargeError
+        elif ch < number:
+            raise SmallError
+        else:
+            break
+
+    except SmallError:
+        print("Guessed too small")
+
+    except LargeError:
+        print("Guessed too large")
+
+print("Jeet gaya lavre")
+
+Key Points to Remember
+
+raise keyword is used to manually throw an exception
+User-defined exceptions improve readability and control
+Frequently used in:
+Validation logic
+Django forms
+Business rules
+APIs

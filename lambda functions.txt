@@ -1,0 +1,245 @@
+Lambda functions are small, powerful, and used everywhere in Python — especially with map, filter, sorted, Django QuerySets, and functional-style code.
+What is a Lambda Function?
+
+A lambda function is:
+An anonymous function (no name)
+Written in one line
+Used for short, simple logic
+
+Syntax
+
+lambda arguments: expression
+
+example :-
+
+def add(a, b):
+    return a + b
+
+Lambda version:
+
+add = lambda a, b: a + b
+
+--------------------------------------------------------------------
+
+1️⃣ Key Characteristics of Lambda
+-> No name (anonymous)
+-> One expression only
+-> Implicit return (no return keyword)
+-> Can take multiple arguments
+-> Used where a function is needed temporarily
+-> Cannot contain statements (if, for, while, try)
+-> No annotations or docstrings
+
+---------------------------------------------------------------------
+
+2️⃣ Basic Examples
+a) Single argument
+square = lambda x: x * x
+print(square(5))   # 25
+
+b) Multiple arguments
+mul = lambda a, b, c: a * b * c
+print(mul(2, 3, 4))   # 24
+
+c) No arguments
+greet = lambda: "Hello Akash"
+print(greet())
+
+-----------------------------------------------------------------------
+
+3️⃣ 			Lambda 		vs		Normal Function
+Feature		lambda				def
+Name		Anonymous			Named
+Lines		1					Multiple
+Return		Implicit				Explicit
+Complexity	Very small			Any size
+Reusability	Low					High
+
+main rule of lambda
+
+If logic > 1 line → don’t use lambda
+
+------------------------------------------------------------------------
+
+4️⃣ Lambda with map()
+
+map(function, iterable) → transforms each element.
+
+Without lambda
+def square(x):
+    return x * x
+
+print(list(map(square, [1, 2, 3])))
+
+With lambda
+print(list(map(lambda x: x * x, [1, 2, 3])))
+
+
+Output:
+
+[1, 4, 9]
+
+------------------------------------------------------------------------
+
+5️⃣ Lambda with filter()
+
+filter(function, iterable) → keeps elements where condition is True.
+
+nums = [1, 2, 3, 4, 5, 6]
+
+evens = list(filter(lambda x: x % 2 == 0, nums))
+print(evens)
+
+
+Output:
+
+[2, 4, 6]
+
+--------------------------------------------------------------------------
+
+6️⃣ Lambda with reduce()
+
+reduce() applies function cumulatively.
+
+from functools import reduce
+
+nums = [1, 2, 3, 4]
+
+result = reduce(lambda a, b: a + b, nums)
+print(result)
+
+
+Output:
+10
+
+--------------------------------------------------------------------------
+
+7️⃣ Lambda with sorted()
+
+Very common in real code.
+
+students = [
+    ("Akash", 90),
+    ("Rahul", 75),
+    ("Sneha", 85)
+]
+
+sorted_students = sorted(students, key=lambda x: x[1])
+print(sorted_students)
+
+
+Sorted by marks:
+[('Rahul', 75), ('Sneha', 85), ('Akash', 90)]
+
+---------------------------------------------------------------------------
+
+8️⃣ Lambda with min() / max()
+
+students = [
+    ("Akash", 90),
+    ("Rahul", 75),
+    ("Sneha", 85)
+]
+
+max_student = max(students, key=lambda x: x[1])
+print(max_student)
+
+Output:
+('Akash', 90)
+
+---------------------------------------------------------------------------
+
+9️⃣ Lambda in Dictionary Sorting
+data = {
+    "apple": 50,
+    "banana": 20,
+    "orange": 30
+}
+
+sorted_items = sorted(data.items(), key=lambda x: x[1])
+print(sorted_items)
+
+----------------------------------------------------------------------------
+
+🔟 Lambda in List Comprehension (Comparison)
+
+we should avoid using lambda with list comprehension becoz of the computational complexity and it can result into unforeseen errors 
+
+Bad:
+list(map(lambda x: x * x, [1, 2, 3]))
+
+Better:
+[x * x for x in [1, 2, 3]]
+
+
+Transform → list comprehension
+Complex pipeline → map/filter + lambda
+
+-------------------------------------------------------------------------------
+
+1️⃣1️⃣ Conditional Logic in Lambda
+
+Lambda supports ternary expressions.
+
+Syntax
+lambda x: value_if_true if condition else value_if_false
+
+
+Example:
+
+check = lambda x: "Even" if x % 2 == 0 else "Odd"
+print(check(7))
+
+
+Output:
+Odd
+
+-------------------------------------------------------------------------------
+
+1️⃣2️⃣ Lambda with Multiple Conditions
+grade = lambda m: "A" if m >= 90 else "B" if m >= 75 else "C"
+print(grade(80))
+
+-------------------------------------------------------------------------------
+
+1️⃣3️⃣ Lambda Inside Functions
+def multiplier(n):
+    return lambda x: x * n
+
+double = multiplier(2)
+triple = multiplier(3)
+
+print(double(5))   # 10
+print(triple(5))   # 15
+
+
+this is the implementation of Closures using lambda
+
+------------------------------------------------------------------------------
+
+1️⃣4️⃣ Lambda vs Generator Functions ❌
+
+Generators don't work with lambda its an invalid computation becoz lambda does not "yield"
+
+------------------------------------------------------------------------------
+ 
+1️⃣5️⃣ Lambda Limitations (VERY IMPORTANT)
+
+Lambda cannot contain:
+a) return
+b) for, while
+c) try/except
+d) assert
+e) pass
+f) multiple expressions
+
+------------------------------------------------------------------------------
+
+1️⃣6️⃣ When NOT to Use Lambda
+
+-> Complex logic
+-> Reusable business logic
+-> Debug-heavy code
+-> Long conditions
+
+Use def instead.

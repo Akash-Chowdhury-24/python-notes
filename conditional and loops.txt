@@ -1,0 +1,41 @@
+conditional programming 
+
+if else -> 
+
+syntax :-
+if condition: 
+	//body
+else:
+	//body 
+-----------------------------------------------------
+
+elif->
+
+if condition: 
+	//body
+elif condition:
+	// body
+elif condition:
+	// body
+else:
+	//body 
+
+Note-> we write && as “and” her and || as “or”
+
+=======================================================
+
+loops
+
+for loop
+for variable in list1:          -> looping through the list list1
+	//body
+
+for variable in range(1 , 5)    -> range from 1 to 4 will not include 5. It takes start stop step, if only one value is given then its stop , strat is default 0 and step is default 1
+
+
+While loop
+Syntax
+while condition:
+	// body
+	// increment or decrement 
+

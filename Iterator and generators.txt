@@ -1,0 +1,324 @@
+1️⃣ What is an Iterator?
+
+An iterator is an object that:
+
+Produces values one at a time
+
+Remembers its state
+
+Stops when values are exhausted
+
+Key idea:
+
+Iterators are about lazy evaluation (values are generated only when needed)
+
+-------------------------------------------------------------------------------------------------------
+
+2️⃣ Iterable vs Iterator (VERY IMPORTANT)
+🔹 Iterable
+
+An object you can loop over
+Examples:
+
+list
+tuple
+set
+dict
+string
+
+nums = [1, 2, 3]
+
+
+🔹 Iterator
+
+An object that actually returns values one by one
+
+----------------------------------------------------------------------------------------------------------
+
+🔍 How Python knows something is iterable?
+
+An object is iterable if it has:
+
+__iter__()
+
+
+An object is an iterator if it has:
+
+__iter__()
+__next__()
+
+-----------------------------------------------------------------------------------------------------------
+
+3️⃣ Using iter() and next()
+nums = [10, 20, 30]
+
+it = iter(nums)   # convert iterable → iterator
+
+print(next(it))  # 10
+print(next(it))  # 20
+print(next(it))  # 30
+
+
+If no elements remain:
+
+print(next(it))  # ❌ StopIteration
+
+------------------------------------------------------------------------------------------------------------
+
+4️⃣ StopIteration Exception
+
+When an iterator is exhausted, it raises:
+StopIteration
+
+Example:
+
+it = iter([1])
+
+print(next(it))  # 1
+print(next(it))  # StopIteration
+
+⚠️ for loops automatically handle this exception.
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+5️⃣ for Loop = Iterator Under the Hood
+
+This:
+
+for x in [1, 2, 3]:
+    print(x)
+
+Is internally doing:
+
+it = iter([1, 2, 3])
+while True:
+    try:
+        x = next(it)
+        print(x)
+    except StopIteration:
+        break
+
+---------------------------------------------------------------------------------------------------------------------
+
+6️⃣ Iterator vs List (Memory Difference)
+❌ List (Eager evaluation)
+nums = [i for i in range(1_000_000)]  # 1_000_000 is same as 1000000-> its just for visual understanding 
+
+✅ Iterator (Lazy evaluation)
+nums = iter(range(1_000_000))
+
+
+✔ Iterator saves huge memory
+
+----------------------------------------------------------------------------------------------------------------------
+
+7️⃣ Built-in Iterators in Python
+Function			Purpose
+iter() ->		Convert iterable to iterator
+next() ->		Get next value
+range()-> 	Lazy sequence
+enumerate() -> 	Index + value
+zip() ->		Combine iterables
+map() -> 	Transform
+filter() -> 	Filter
+reversed() ->	Reverse iteration
+
+
+Example: zip()
+names = ["A", "B", "C"]
+scores = [90, 80, 85]
+
+for n, s in zip(names, scores):
+    print(n, s)
+
+output->
+A 90
+B 80
+C 85
+
+-------------------------------------------------------------------------------------------------
+
+
+8️⃣ Iterator Exhaustion (One-Time Use)
+
+⚠️ Iterators can be used only once
+
+nums = iter([1, 2, 3])
+
+for i in nums:
+    print(i)
+
+for i in nums:
+    print(i)  # ❌ nothing prints
+
+
+------------------------------------------------------------------------------------------------------------------
+
+9️⃣ Creating Your Own Iterator (Class-Based)
+Rules:
+Implement __iter__()
+Implement __next__()
+
+Example: Custom Counter Iterator
+class Counter:
+    def __init__(self, start, end):
+        self.current = start
+        self.end = end
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current > self.end:
+            raise StopIteration
+        value = self.current
+        self.current += 1
+        return value
+
+c = Counter(1, 5)
+
+for num in c:
+    print(num) # print 1 to 5 
+
+
+----------------------------------------------------------------------------------------------------------------
+
+🔟 Infinite Iterators
+class InfiniteCounter:
+    def __init__(self):
+        self.num = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.num += 1
+        return self.num
+
+
+⚠️ Be careful:
+
+for i in InfiniteCounter():
+    print(i)  # infinite loop
+
+---------------------------------------------------------------------------------------------------------------
+
+1️⃣1️⃣ Generator = Shortcut to Iterator ⭐
+
+Generators automatically:
+Implement __iter__()
+Implement __next__()
+Raise StopIteration
+
+Generator Example
+def count_up_to(n):
+    i = 1
+    while i <= n:
+        yield i
+        i += 1
+
+
+for x in count_up_to(5):
+    print(x)
+
+-------------------------------------------------------------------------------------------------------------
+
+1️⃣2️⃣ Generator vs Iterator Class
+Generator	  Iterator Class
+Short & clean	  More control
+Uses yield	  Uses __next__
+Less code	      More boilerplate
+
+------------------------------------------------------------------------------------------------------------
+
+1️⃣3️⃣ Generator Expression
+
+Like list comprehension, but lazy:
+
+gen = (x * 2 for x in range(5))
+
+print(next(gen))  # 0
+print(next(gen))  # 2
+
+
+-----------------------------------------------------------------------------------------------------------
+
+1️⃣4️⃣ map() and filter() are Iterators
+nums = [1, 2, 3, 4]
+
+mapped = map(lambda x: x * 2, nums)
+filtered = filter(lambda x: x % 2 == 0, nums)
+
+print(list(mapped))    # [2, 4, 6, 8]
+print(list(filtered))  # [2, 4]
+
+------------------------------------------------------------------------------------------------------------
+
+1️⃣5️⃣ itertools Module (ADVANCED)
+import itertools
+
+🔹 count() 
+for i in itertools.count(10, 2): -> this basically returns the nums starting from ten and keeps on incrementing for an infinite amount of time
+    if i > 20:
+        break
+    print(i)
+
+output ->
+10
+12
+14
+16
+18
+20
+
+🔹 cycle()
+for x in itertools.cycle([1, 2, 3]): -> this will cycle through the list infinitely 
+    print(x)
+
+🔹 islice()
+from itertools import islice
+
+nums = range(100)
+print(list(islice(nums, 5, 10))) # output -> [5, 6, 7, 8, 9]
+
+---------------------------------------------------------------------------------------------------------
+
+
+1️⃣6️⃣ Iterator Use-Cases
+
+✔ Reading large files
+✔ Streaming data
+✔ Infinite sequences
+✔ Data pipelines
+✔ Memory-efficient loops
+✔ AWS / ML / Big data processing
+
+----------------------------------------------------------------------------------------------------------
+
+1️⃣7️⃣ Common Interview Questions
+Q: Difference between iterable and iterator?
+
+✔ Iterable can produce an iterator
+✔ Iterator produces values and tracks state
+
+Q: Can we reset an iterator?
+
+❌ No — create a new one
+
+Q: Why generators are faster?
+
+✔ Lazy evaluation
+✔ Less memory
+✔ No intermediate storage
+
+-------------------------------------------------------------------------------------------------------
+
+1️⃣8️⃣ Summary (One-Look Revision)
+
+✔ Iterators = lazy + memory-efficient
+✔ __iter__() + __next__()
+✔ One-time use
+✔ Generators = easiest iterator
+✔ for loop uses iterator internally

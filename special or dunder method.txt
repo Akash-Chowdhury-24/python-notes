@@ -1,0 +1,351 @@
+Special / Magic methods (also called dunder methods) are what make Python feel natural, operator-friendly, and object-oriented.
+Special methods are methods with the form:
+
+__methodname__
+
+Example:
+
+__init__, __str__, __add__, __len__
+
+They are:
+-> Automatically called by Python
+-> Triggered by built-in syntax
+-> Rarely called directly
+
+-----------------------------------------------------------------------------------------------------------------
+
+Why Magic Methods Exist
+
+They allow:
+-> Objects to behave like built-ins
+-> Operator overloading
+-> Custom iteration
+-> Custom printing
+-> Custom comparison
+-> Context managers (with)
+
+---------------------------------------------------------------------------------------------------------------
+
+1️⃣ Object Lifecycle Methods
+a) __new__ → object creation
+b) __init__ → object initialization
+c) __del__ → object destruction
+
+a)__init__
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+
+b)__new__ (RARE)
+class Test:
+    def __new__(cls):
+        print("Creating object")
+        return super().__new__(cls)
+
+    def __init__(self):
+        print("Initializing object")
+
+Test()
+
+
+Output:
+
+Creating object
+Initializing object
+
+c)__del__
+class Demo:
+    def __del__(self):
+        print("Object destroyed")
+
+
+⚠️ Not reliable for resource cleanup
+
+-------------------------------------------------------------------------------------------------------------
+
+2️⃣ String Representation Methods
+a)__str__ → user friendly
+b)__repr__ → developer friendly
+class Student:
+    def __init__(self, name, marks):
+        self.name = name
+        self.marks = marks
+
+    def __str__(self):
+        return f"{self.name} scored {self.marks}"
+
+    def __repr__(self):
+        return f"Student({self.name!r}, {self.marks!r})"
+
+s = Student("Akash", 90)
+print(s)      # __str__
+s             # __repr__
+
+------------------------------------------------------------------------------------------------------------
+
+3️⃣ Comparison Magic Methods
+Operator	Method
+==	__eq__
+!=	__ne__
+<	__lt__
+<=	__le__
+>	__gt__
+>=	__ge__
+class Product:
+    def __init__(self, price):
+        self.price = price
+
+    def __lt__(self, other):
+        return self.price < other.price
+
+p1 = Product(100)
+p2 = Product(200)
+
+print(p1 < p2)   # True
+
+-----------------------------------------------------------------------------------------------------------
+
+4️⃣ Arithmetic Operator Overloading
+Operator	Method
++	__add__
+-	__sub__
+*	__mul__
+/	__truediv__
+%	__mod__
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+
+p1 = Point(1, 2)
+p2 = Point(3, 4)
+p3 = p1 + p2
+print(p3.x)
+print(p3.y)
+
+output
+4
+6
+
+here basically we are adding the x with x and y with y and crating a new object so that p1 and p2 are not modified 
+
+if we would have done -> return (self.x + other.x, self.y + other.y)
+then the output would have been (4,6)
+
+----------------------------------------------------------------------------------------------------------------
+
+5️⃣ Reflected Operators
+
+Used when left operand doesn’t support operation.
+
+Method	Operator
+__radd__	 -> +
+__rmul__	 -> *
+__rsub__ -> -
+class Num:
+    def __radd__(self, other):
+        return other + 10
+
+print(5 + Num())   # 15
+
+this is a very important concept . what python does in print(5 + Num()) is , since 5 is int , python call int like int.__add__(5,num()) and int has no idead what the hell num() is becoz it is expecting a number. so obviously the left will fail becoz python always evaluates from left to right. so in here comes the reflected operators which are kind of placed for the right only, so incase the left fails it goes to the right , that is num()__radd_(5) which is possible according to our code therefore these functions are like a failsafe methods   
+
+--------------------------------------------------------------------------------------------------------------------
+
+6️⃣ In-place Operators
+Operator	Method
++=	__iadd__
+*=	__imul__
+class Counter:
+    def __init__(self, value):
+        self.value = value
+
+    def __iadd__(self, other):
+        self.value += other
+        return self
+
+c = Counter(5)
+c=+5
+
+print(c.value)
+
+output 
+10
+
+in here what is happening is that when the __add__ is called we always create a new object but when we dont want to do that we use the __iadd__. c = c+5 will call the __add__ but c+=5 will call __iadd__ provided that __iadd__ is defined else it will call __add__ only. __iadd__ modifies the same object instead of creating a new one , it is very helpful in case of counters.
+
+--------------------------------------------------------------------------------------------------------------------
+
+7️⃣ Type Conversion Methods
+Conversion	Method
+int() -> 	__int__
+float() -> __float__
+bool() -> __bool__
+class Bank:
+    def __init__(self, balance):
+        self.balance = balance
+
+    def __bool__(self):
+        return self.balance > 0
+
+if Bank(100):
+    print("Has money")
+
+
+this is basically the internal implementation of the type cast methods like int() etc. by overriding them we can add our own customizations like i did above
+
+-------------------------------------------------------------------------------------------------------------------
+
+8️⃣ Container / Collection Methods
+Behavior	Method
+len()	__len__
+in	__contains__
+Indexing	__getitem__
+Assignment	__setitem__
+Delete	__delitem__
+class MyList:
+    def __init__(self, items):
+        self.items = items
+
+    def __len__(self):
+        return len(self.items)
+
+    def __getitem__(self, index):
+        return self.items[index]
+
+
+these are just the internal working of the built in functions provided by python. no built in function in python has any special power it just calls some special function
+in reality these are very comples implementation we are just showing a simple portrayal.
+
+----------------------------------------------------------------------------------------------------------------
+
+9️⃣ Iteration Methods
+Purpose	Method
+Iterator	__iter__
+Next item	__next__
+class Count:
+    def __init__(self, max):
+        self.max = max
+        self.current = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current >= self.max:
+            raise StopIteration
+        self.current += 1
+        return self.current
+
+this is the internal working and the special functions that a for loop calls the __iter__ is used for iteration while __next__ is used to get the next item in the provided range 
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+🔟 Callable Objects
+
+Make objects callable like functions.
+
+class Adder:
+    def __call__(self, a, b):
+        return a + b
+
+add = Adder()
+print(add(3, 4))   # 7
+
+this function is called by default when ever we call object like this it ia by default done by python
+
+----------------------------------------------------------------------------------------------------------------------
+
+1️⃣1️⃣ Attribute Access Magic
+Action	Method
+Access	__getattr__
+Set	__setattr__
+Delete	__delattr__
+class Demo:
+class Demo:
+    def __getattr__(self, name):
+        return f"{name} not found"
+
+    def __setattr__(self, name, value):
+        print(f"SET {name}")
+        self.__dict__[name] = value  -> here dont so self.name = value , this will result in infinite loop
+
+    def __delattr__(self, name):
+        print(f"DEL {name}")
+        del self.__dict__[name]
+
+
+
+__getattr__(self, name) -> is called when an attribute is called by the object but it is not found so then this function is called , here name is the attribute name 
+__setattr__(self, name, value) -> this function is called when ever we set a attribute -> d = Demo() d.x = 10
+__deattr(self,name) -> called when we delete an attribute -> d = Demo()	d.x = 10 del d.x
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+1️⃣2️⃣ Context Manager Methods (with)
+Method	Purpose
+__enter__	Setup
+__exit__	Cleanup
+class FileManager:
+    def __enter__(self):
+        print("Enter")
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print("Exit")
+
+with FileManager():
+    print("Inside block")
+
+this is for the context manager methods which will we cover in the context manager notes 
+
+---------------------------------------------------------------------------------
+
+1️⃣3️⃣ Hashing & Equality
+class User:
+    def __init__(self, username):
+        self.username = username
+
+    def __eq__(self, other):
+        return self.username == other.username
+
+    def __hash__(self):
+        return hash(self.username)
+
+
+Used in sets & dict keys.
+
+-----------------------------------------------------------------------------------
+
+1️⃣4️⃣ Slots (Advanced Optimization)
+class User:
+    __slots__ = ("name", "age")
+
+
+Prevents dynamic attributes, saves memory.
+
+
+🔥 MOST IMPORTANT MAGIC METHODS (INTERVIEW)
+__init__
+__str__ / __repr__
+__eq__
+__add__
+__len__
+__getitem__
+__iter__ / __next__
+__call__
+__enter__ / __exit__
+
+❌ Common Mistakes
+
+❌ Returning non-bool in __eq__
+❌ Mutating object in __hash__
+❌ Overusing __del__
+❌ Forgetting to return self in __iadd__

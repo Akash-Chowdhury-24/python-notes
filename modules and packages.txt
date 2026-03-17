@@ -1,0 +1,186 @@
+A module = a Python file
+A package = a folder of modules
+
+That’s it. Everything else builds on this.
+
+MODULES
+🔹 What is a module?
+
+Any .py file is a module.
+
+Example file: math_utils.py
+
+# math_utils.py
+def add(a, b):
+    return a + b
+
+PI = 3.14
+
+🔹 Why modules exist
+
+✔ Code reuse
+✔ Better organization
+✔ Avoid huge files
+✔ Namespacing (avoid name clashes)
+
+🔹 Different ways to import a module
+1️⃣ import module
+import math_utils
+
+print(math_utils.add(2, 3))
+print(math_utils.PI)
+
+
+✔ Safest
+✔ Clear namespace
+✔ Preferred in large projects
+
+2️⃣ from module import name
+from math_utils import add, PI
+
+print(add(2, 3))
+print(PI)
+
+
+✔ Shorter
+❌ Risk of name conflicts
+
+3️⃣ from module import * ❌ (avoid)
+from math_utils import *
+
+
+❌ Pollutes namespace
+❌ Hard to debug
+❌ Bad for interviews & production
+
+4️⃣ as keyword (aliasing)
+import math_utils as mu
+
+print(mu.add(2, 3))
+
+
+Or:
+
+from math_utils import add as plus
+
+print(plus(2, 3))
+
+
+✔ Very common
+✔ Improves readability
+
+🔹 How Python finds a module (important)
+
+Python searches in:
+
+Current directory
+
+PYTHONPATH
+
+Standard library
+
+site-packages
+
+import sys
+print(sys.path)
+
+
+========================================================================================================================
+
+
+PACKAGES
+🔹 What is a package?
+
+A directory that groups modules.
+
+Example structure:
+
+project/
+│
+├── main.py
+└── utils/             	-> package
+    ├── __init__.py		-> this is the module initializer file
+    ├── math_utils.py 		-> module
+    └── string_utils.py	-> module		
+
+🔹 What is __init__.py?
+Old meaning (Python < 3.3)
+
+✔ Required to tell Python: “this is a package”
+
+Modern meaning (Python 3.3+)
+
+✔ Optional
+✔ Used for package initialization
+
+🔹 Importing from a package
+1️⃣ Import module from package
+import utils.math_utils
+
+print(utils.math_utils.add(2, 3))
+
+2️⃣ From package import module
+from utils import math_utils
+
+print(math_utils.add(2, 3))
+
+3️⃣ From package.module import name
+from utils.math_utils import add
+
+print(add(2, 3))
+
+🔹 __init__.py practical use
+inside utils/init.py
+from .math_utils import add
+
+
+Now you can do in any file:
+
+from utils import add
+
+
+✔ Clean API
+✔ Hides internal structure
+
+-===============================================================================================================================================================================
+
+🔄 Absolute vs Relative imports (INTERVIEW FAVORITE)
+Absolute import (recommended)
+from utils.math_utils import add
+
+Relative import (inside packages only)
+from .math_utils import add
+from ..helpers import log
+❌ Cannot be used in top-level scripts
+
+
+
+================================================================================================================================================================================
+
+
+📦 Real-world package example
+django_project/
+│
+├── manage.py
+├── app/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   └── urls.py
+
+
+Each app = package
+Each file = module
+
+🧠 Common mistakes ❌
+
+Forgetting __init__.py in older Python
+Circular imports
+Using import *
+Wrong relative imports
+
+===================================================================================================================================================================================
+
+File  → Module
+Folder → Package
+Project → Collection of packages

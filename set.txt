@@ -1,0 +1,80 @@
+Set →
+
+A set is an unordered collection of unique elements.
+
+1. Creation
+A = {10, 20, 30, 40, 50}    # set with elements
+A = set()                  # empty set
+
+
+2. Allowed Data Types in a Set
+
+A set can store only immutable (hashable) data types:
+
+Numbers (int, float)
+
+Strings (str)
+
+Tuples (containing only immutable elements)
+
+❌ Not allowed:
+
+Lists
+
+Sets
+
+Dictionaries
+
+A = {1, "Python", (2, 3)}
+
+3. Mutability
+
+The set itself is mutable
+
+Elements inside a set are immutable
+
+You cannot modify an existing element
+
+You can add or delete elements
+
+4. Basic Set Operations
+A.add(20)           # adds an element
+A.remove(30)        # removes element, raises error if not found
+A.discard(30)       # removes element, no error if not found
+A.pop()             # removes a random element
+A.clear()           # removes all elements
+
+5. Set Mathematical Operations
+A | B    or A.union(B)                  # union
+A & B    or A.intersection(B)           # intersection
+A - B    or A.difference(B)             # difference
+A ^ B    or A.symmetric_difference(B)   # elements without common values
+
+6. Set Relationship Checks
+B.issubset(A)        # checks if B ⊆ A
+B.issuperset(A)     # checks if B ⊇ A
+A.isdisjoint(B)     # checks if A and B have no common elements
+
+7. Membership Testing
+10 in A
+30 not in A
+
+
+✔️ Very fast operation (O(1) average time complexity)
+
+8. Iteration
+for item in A:
+    print(item)
+
+
+⚠️ Order is not guaranteed
+
+9. Frozen Set (Immutable Set)
+fs = frozenset([1, 2, 3])
+
+
+Immutable version of a set
+
+Can be used as dictionary keys
+
+Can be stored inside other sets

@@ -1,0 +1,122 @@
+Text File Handling
+Steps
+1. Opening a File
+f = open(filename, mode)
+
+
+filename → file name if in the same directory, else full file path
+
+mode options:
+
+'r' → read (default mode)
+
+'w' → write (overwrites existing content)
+
+'a' → append (adds data at the end)
+
+📌 Important behavior
+
+'r' → error if file does not exist
+
+'w' → creates file if not present, overwrites existing data
+
+'a' → creates file if not present, appends data
+
+2. Reading File Content
+f.read()          # reads entire file as a single string
+
+3. Closing the File
+f.close()
+
+
+✔️ Always close the file to free system resources
+
+4. Reading Lines
+f.readlines()     # returns a list of lines
+
+
+Each line is stored as a string (with \n at the end).
+
+5. Writing to a File
+f.write("this is my demo text")
+
+
+Writes string data to the file
+
+Does NOT automatically add a new line
+
+6. Using with Statement (Recommended)
+with open(filename, mode) as f:
+    f.read()
+
+
+✔️ Automatically closes the file
+✔️ Safer and cleaner approach
+
+7. Extra Useful Methods
+f.readline()      # reads one line at a time
+f.writelines(list_of_strings)  # writes multiple lines
+
+CSV File Handling
+CSV Library
+import csv
+
+Reading CSV File
+Steps
+f = open(filename, mode)
+obj = csv.reader(f)
+data = list(obj)
+
+
+csv.reader() returns a reader object
+
+Typecast to list to get list of lists
+
+Example:
+
+[
+  ['name', 'age'],
+  ['akash', '22'],
+  ['mishti', '21']
+]
+
+Writing CSV File
+Steps
+f = open(filename, mode, newline="")
+obj = csv.writer(f)
+
+
+📌 newline=""
+
+Required mainly on Windows
+
+Prevents blank line after each row
+
+Writing Rows
+obj.writerow(["akash", 696969])
+obj.writerow(["mishti", 101010])
+
+
+📌 Data must be:
+
+list or tuple
+
+Each element maps to one column
+
+Appending to CSV
+
+Same process as writing
+
+Use mode 'a'
+
+f = open(filename, "a", newline="")
+obj = csv.writer(f)
+obj.writerow(["new_user", 123456])
+
+Using with for CSV (Best Practice)
+with open(filename, mode, newline="") as f:
+    obj = csv.writer(f)
+    obj.writerow(["akash", 696969])
+
+
+✔️ No need to call close()
